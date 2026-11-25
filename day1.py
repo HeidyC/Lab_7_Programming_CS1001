@@ -12,8 +12,7 @@ Manual file demo:     python day1.py pairs.txt results.txt
 """
 
 
-def sum_pair(text: str) -> float:
-    """Return the sum of two numbers encoded in a string.
+"""Return the sum of two numbers encoded in a string.
 
     The numbers are separated by whitespace. Use split() and float().
     Examples:
@@ -22,22 +21,28 @@ def sum_pair(text: str) -> float:
 
     Do not read input, print, or open files in this helper function.
     """
-    # TODO (Task 1): Split, convert to floats, add, and return the total.
-    raise NotImplementedError
+def sum_pair(text: str) -> float:
+    numbers = text.split()
+
+    first = float(numbers[0])
+    second = float(numbers[1])
+
+    return first + second
 
 
-def keyboard_sum() -> None:
-    """Prompt for one pair of numbers and print their sum.
+"""Prompt for one pair of numbers and print their sum.
 
     Prompt exactly: Enter two numbers: 
     If the user types "3 4", print exactly: Sum: 7.0
     Reuse sum_pair(). Return None.
     """
     # TODO (Task 2): Call input() once, reuse sum_pair(), and print result.
-    raise NotImplementedError
+def keyboard_sum() -> None:
+    text = input("Enter two numbers: ")
+    result = sum_pair(text)
+    print("Sum:", result)
 
 
-def sum_file(input_filename: str, output_filename: str) -> None:
     """Read number pairs from one file and write one sum per output line.
 
     Each input line contains two valid numbers (e.g., "3.0 4.0\n").
@@ -47,7 +52,12 @@ def sum_file(input_filename: str, output_filename: str) -> None:
     An empty input file creates an empty output file. Return None.
     """
     # TODO (Task 3): Read lines, call sum_pair(), and write results.
-    raise NotImplementedError
+def sum_file(input_filename: str, output_filename: str) -> None:
+    with open(input_filename, "r") as input_file:
+        with open(output_filename, "w") as output_file:
+            for line in input_file:
+                result = sum_pair(line)
+                output_file.write(str(result) + "\n")
 
 
 if __name__ == "__main__":

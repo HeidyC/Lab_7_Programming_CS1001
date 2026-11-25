@@ -7,6 +7,7 @@ Run: python -m unittest test_1.py
 
 import io
 import tempfile
+import os
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
@@ -23,6 +24,8 @@ class TestSumPair(unittest.TestCase):
         self.assertEqual(4.5, sum_pair("  -2.5    7  "))
 
     # TODO: Add ONE more test, for example zero or two decimal values.
+    def test_sum_pair_zero_and_decimal(self):
+        self.assertAlmostEqual(sum_pair("0 2.5"), 2.5)
 
 
 class TestKeyboardSum(unittest.TestCase):
@@ -57,7 +60,18 @@ class TestSumFile(unittest.TestCase):
             self.assertEqual("", destination.read_text(encoding="utf-8"))
 
     # TODO: Add ONE more test, for example a single input line or a zero sum.
+    def test_sum_file_pair_summing_to_zero(self):
+        with tempfile.TemporaryDirectory() as folder:
+            input_path = os.path.join(folder, "input.txt")
+            output_path = os.path.join(folder, "output.txt")
 
+            with open(input_path, "w") as input_file:
+                input_file.write("-2.5 2.5\n")
+
+            sum_file(input_path, output_path)
+
+            with open(output_path, "r") as output_file:
+                self.assertEqual(output_file.read(), "0.0\n")
 
 if __name__ == "__main__":
     unittest.main()
